@@ -18,14 +18,15 @@ export default function Home() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // 🛠️ CORREÇÃO: Função unificada e limpa para evitar loops de requisição
   const calcularEconomia = async (e) => {
     e.preventDefault();
     setCarregando(true);
     setResultadoSimulacao(null);
     
     try {
-      const urlBackend = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${urlBackend}/api/simular`, {
+      // 🔄 Rota relativa padrão para microsserviços monorepo na Vercel
+      const response = await fetch('/api/simular', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -40,11 +41,13 @@ export default function Home() {
         const data = await response.json();
         setResultadoSimulacao(data);
       } else {
-        alert("Erro no servidor ao processar os cálculos.");
+        const erroTexto = await response.text();
+        console.error("Erro retornado pelo servidor Python:", erroTexto);
+        alert("O servidor Python respondeu com um erro ao processar os cálculos.");
       }
     } catch (error) {
-      console.error("Erro na requisição:", error);
-      alert("Não foi possível conectar ao back-end. Certifique-se de que o servidor Python está ligado!");
+      console.error("Erro na requisição de rede:", error);
+      alert("Não foi possível conectar ao back-end. Certifique-se de que a API Python terminou de compilar na Vercel!");
     } finally {
       setCarregando(false);
     }
@@ -53,11 +56,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#0b111e] bg-gradient-to-br from-[#0b111e] via-[#121b2d] to-[#070b14] text-white font-sans flex flex-col justify-between selection:bg-[#7fcc5e] selection:text-[#182236] relative overflow-x-hidden">
       
-      {/* 🔮 ELEMENTOS DE ILUMINAÇÃO DE FUNDO (GLOW BACKGROUND EFFECT) */}
+      {/* 🔮 ELEMENTOS DE ILUMINAÇÃO DE FUNDO */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[#7fcc5e]/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-emerald-500/5 blur-[150px] pointer-events-none" />
 
-      {/* 🟢 BOTÃO FLUTUANTE DO WHATSAPP COM ACABAMENTO TRANSLÚCIDO GLASS */}
+      {/* 🟢 BOTÃO FLUTUANTE DO WHATSAPP */}
       <a 
         href="https://wa.me/5561995615570"
         target="_blank" 
@@ -72,7 +75,7 @@ export default function Home() {
         </span>
       </a>
 
-      {/* HEADER EM ULTRA GLASSMORPHISM (NAV BAR FIXA ESTILO IOS 26) */}
+      {/* HEADER EM ULTRA GLASSMORPHISM */}
       <header className="w-full max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-6 sticky top-4 z-50 bg-white/[0.02] backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-[0_12px_40px_0_rgba(0,0,0,0.5)]">
         <div className="flex items-center gap-3 cursor-pointer group">
           <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-500 group-hover:rotate-12">
@@ -100,7 +103,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* CONTROLES DE ABAS EM VIDRO FOSCO */}
         <nav className="flex flex-wrap justify-center gap-1.5 p-1 bg-black/30 border border-white/[0.05] rounded-xl backdrop-blur-md">
           {[
             { id: 'home', label: 'Home' },
@@ -124,10 +126,9 @@ export default function Home() {
         </nav>
       </header>
 
-      {/* CONTEÚDO DINÂMICO PRINCIPAL COM TRANSIÇÕES */}
+      {/* CONTEÚDO DINÂMICO */}
       <div className="flex-grow w-full max-w-6xl mx-auto px-6 py-12">
         
-        {/* ================= SEÇÃO: HOME ================= */}
         {abaAtiva === 'home' && (
           <main className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center animate-[fadeIn_0.4s_ease-out]">
             <div className="space-y-8">
@@ -142,7 +143,6 @@ export default function Home() {
                 Reduza os custos energéticos do seu imóvel em até 95%. Projetamos, instalamos e homologamos usinas inteligentes com total segurança jurídica e técnica.
               </p>
               
-              {/* CARDS INDICADORES EM VIDRO TRANSLÚCIDO */}
               <div className="grid grid-cols-2 gap-6 max-w-md pt-2">
                 <div className="p-5 bg-white/[0.02] rounded-2xl border border-white/[0.06] backdrop-blur-md shadow-lg">
                   <p className="text-3xl font-black text-[#7fcc5e] tracking-tight">+5.000</p>
@@ -155,7 +155,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* PAINEL DO SIMULADOR INTEGRADO EM GLASSMORPHISM */}
             <div className="flex justify-center md:justify-end">
               <div className="bg-white/[0.03] backdrop-blur-xl p-8 rounded-3xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6)] w-full max-w-md border border-white/[0.08] relative overflow-hidden transition-all duration-500">
                 <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#7fcc5e] to-emerald-500"></div>
@@ -198,7 +197,6 @@ export default function Home() {
                     </form>
                   </>
                 ) : (
-                  /* 📊 PAINEL EXECUTIVO DO ESTUDO TÉCNICO (ESTILO VISUAL QUENTE DA IMAGEM) */
                   <div className="animate-[fadeIn_0.5s_ease-out] space-y-5">
                     <div className="text-center border-b border-white/[0.08] pb-3">
                       <div className="text-3xl mb-1">🚀</div>
@@ -243,7 +241,6 @@ export default function Home() {
                       *Os valores acima são estimativas aproximadas regionais. O projeto final exige validação da nossa equipe de engenharia.
                     </p>
 
-                    {/* SEÇÃO DE BOTÕES CUSTOMIZADOS EM CARDS HUMANIZADOS */}
                     <div className="pt-2 space-y-2">
                       <a 
                         href={`https://wa.me/5561995615570?text=${encodeURIComponent(resultadoSimulacao.mensagem_whatsapp)}`}
@@ -292,7 +289,7 @@ export default function Home() {
           </section>
         )}
 
-        {/* ================= SEÇÃO: PRODUTOS E SOLUÇÕES REESTRUTURADOS ================= */}
+        {/* ================= SEÇÃO: PRODUTOS E SOLUÇÕES ================= */}
         {abaAtiva === 'produtos' && (
           <section className="space-y-12 animate-[fadeIn_0.4s_ease-out]">
             <div className="text-center max-w-2xl mx-auto">
@@ -303,7 +300,6 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { 
-                  // Fatura Digital de Energia
                   img: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&w=600&q=80", 
                   t: '⚡ Energia por Assinatura', 
                   d: 'Economia imediata na fatura de luz sem precisar instalar placas no seu telhado. Perfeito para apartamentos, imóveis alugados e pequenas empresas que querem energia limpa via créditos injetados na rede.' 
@@ -314,8 +310,8 @@ export default function Home() {
                   d: 'Desenvolvimento e fixação de painéis fotovoltaicos Tier 1 em telhados e coberturas para autogeração contínua e redução de custos em até 95%.' 
                 },
                 { 
-                  // Placa Solar em Ambiente de Campo Agrícola Real
-                  img: "https://www.google.com/imgres?q=placa%20solar%20nas%20fazendas&imgurl=https%3A%2F%2Ffulltech-rs.com.br%2Fwp-content%2Fuploads%2F2018%2F05%2F140518_agricultura-familiar-600x300.jpg&imgrefurl=https%3A%2F%2Ffulltech-rs.com.br%2Fenergia-solar-na-fazenda-9-dicas-para-investir-em-paineis-fotovoltaicos-para-o-agronegocio%2F&docid=SgXGTEwXjiVPeM&tbnid=5n56OiLWjFEzwM&vet=12ahUKEwi6zsOsiMOUAxXQK7kGHY17Lt8QnPAOegQIORAB..i&w=600&h=300&hcb=2&ved=2ahUKEwi6zsOsiMOUAxXQK7kGHY17Lt8QnPAOegQIORAB", 
+                  // 🚜 CORREÇÃO: Link de imagem corrigido e limpo para o Agronegócio
+                  img: "https://images.unsplash.com/photo-1594498653385-d5172b532c00?auto=format&fit=crop&w=600&q=80", 
                   t: '🚜 Agronegócios', 
                   d: 'Autonomia completa no campo com painéis dimensionados para bombardeamento solar, irrigação contínua e suporte integral ao produtor rural.' 
                 },
@@ -406,7 +402,7 @@ export default function Home() {
           <p>&copy; 2026 Velox Solar. Engenharia Especializada em Sistemas Fotovoltaicos.</p>
           <div className="flex gap-6 font-medium text-gray-400">
             <span className="hover:text-[#7fcc5e] transition-colors">📞 (61) 98114-0416 / (61) 99561-5570</span>
-            <span className="hover:text-[#7fcc5e] transition-colors"> veloxsolar.brasilia.ac</span>
+            <span className="hover:text-[#7fcc5e] transition-colors">veloxsolar.brasilia.ac</span>
           </div>
         </div>
       </footer>
