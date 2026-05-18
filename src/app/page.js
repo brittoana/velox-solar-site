@@ -109,7 +109,7 @@ export default function Home() {
           </svg>
           <div className="flex flex-col">
             <span className="text-xl font-black tracking-tight leading-none text-[#111827]">VELOX</span>
-            <span className="text-[#69b549] font-bold text-[10px] tracking-[0.25em] leading-none mt-1">SOLAR</span>
+            <span className="text-[#69b549] font-bold text-[10px] tracking-[0.25em] leading-none mt-1">SOLAR BSB</span>
           </div>
         </div>
 
@@ -172,8 +172,9 @@ export default function Home() {
                 
                 {!resultadoSimulacao ? (
                   <>
+                    {/* TÍTULO ATUALIZADO AQUI */}
                     <div className="text-center mb-6">
-                      <h3 className="text-xl font-bold text-[#111827] tracking-tight">Simulador Inteligente</h3>
+                      <h3 className="text-xl font-bold text-[#111827] tracking-tight">Simule aqui sua economia</h3>
                       <p className="text-gray-500 text-xs mt-1">Calcule a sua redução de custos em segundos</p>
                     </div>
 
@@ -284,7 +285,7 @@ export default function Home() {
               <div className="space-y-4 flex-grow">
                 <h2 className="text-3xl font-black text-[#111827] border-b pb-2 border-gray-200">Quem Somos</h2>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  A <strong>Velox Solar</strong> é uma empresa de engenharia e soluções em energia com <strong>15 anos de experiência</strong> de mercado. Atuamos com foco na transformação da matriz energética do país, convertendo custos operacionais em vantagens competitivas sustentáveis para empresas e residências.
+                  A <strong>Velox Solar BSB</strong> é uma empresa de engenharia e soluções em energia com <strong>15 anos de experiência</strong> de mercado. Atuamos com foco na transformação da matriz energética do país, convertendo custos operacionais em vantagens competitivas sustentáveis para empresas e residências.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed">
                   Contamos com um <strong>departamento de engenharia próprio corporativo</strong>, encarregado de desenhar projetos sob medida com responsabilidade técnica integral (CREA) e conduzir o processo de homologação com agilidade regulatória.
@@ -293,7 +294,7 @@ export default function Home() {
               
               <div className="w-full md:w-80 bg-gray-50 p-6 rounded-2xl border border-gray-200 text-center space-y-4">
                 <div className="text-4xl text-[#69b549]">🛠️</div>
-                <h3 className="font-bold text-[#111827]">Equipe Técnica</h3>
+                <h3 className="font-bold text-[#111827]">Equipe Técnico</h3>
                 <p className="text-xs text-gray-500">Instalação executada por especialistas dedicados dentro das normas rígidas de segurança.</p>
               </div>
             </div>
@@ -321,10 +322,11 @@ export default function Home() {
                   d: 'Desenvolvimento e fixação de painéis fotovoltaicos Tier 1 em telhados e coberturas para autogeração contínua e redução de custos em até 95%.' 
                 },
                 { 
-                  // 🚜 Foto limpa e funcional do Agronegócio
+                  /* 🚜 CARD DO AGRONEGÓCIO COM BLINDAGEM CONTRA ERRO DE REDE */
                   img: "https://images.pexels.com/photos/9799593/pexels-photo-9799593.jpeg?auto=compress&cs=tinysrgb&w=600", 
                   t: '🚜 Agronegócios', 
-                  d: 'Autonomia completa no campo com painéis dimensionados para bombardeamento solar, irrigação contínua e suporte integral ao produtor rural.' 
+                  d: 'Autonomia completa no campo com painéis dimensionados para bombardeamento solar, irrigação contínua e suporte integral ao produtor rural.',
+                  isAgro: true
                 },
                 { 
                   img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80", 
@@ -343,8 +345,21 @@ export default function Home() {
                 }
               ].map((prod, idx) => (
                 <div key={idx} className="bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#69b549]/50 transition-all duration-300 hover:-translate-y-2 group shadow-sm">
-                  <div className="h-48 w-full bg-gray-100 relative overflow-hidden">
-                    <img src={prod.img} alt={prod.t} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="h-48 w-full bg-gray-100 relative overflow-hidden flex items-center justify-center">
+                    
+                    {/* Renderização condicional com fallback geométrico elegante */}
+                    {prod.isAgro ? (
+                      <div className="w-full h-full relative bg-gradient-to-br from-emerald-800 to-emerald-950 flex flex-col items-center justify-center text-center p-4 select-none">
+                        <div className="absolute inset-0 bg-[radial-gradient(#7fcc5e_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+                        <span className="text-4xl mb-2 drop-shadow-sm">🚜</span>
+                        <span className="text-white text-xs font-black tracking-widest uppercase bg-black/30 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+                          Usinas Rurais
+                        </span>
+                      </div>
+                    ) : (
+                      <img src={prod.img} alt={prod.t} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    )}
+                    
                   </div>
                   <div className="p-6 space-y-3">
                     <h3 className="font-bold text-[#111827] text-lg group-hover:text-[#69b549] transition-colors">{prod.t}</h3>
@@ -410,7 +425,7 @@ export default function Home() {
       {/* FOOTER CORPORATIVO PREMIUM MINIMALISTA COM LINKS OFICIAIS */}
       <footer className="w-full bg-white py-8 border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-400">
-          <p>&copy; 2026 Velox Solar. Engenharia Especializada em Sistemas Fotovoltaicos.</p>
+          <p>&copy; 2026 Velox Solar BSB. Engenharia Especializada em Sistemas Fotovoltaicos.</p>
           <div className="flex flex-wrap justify-center gap-6 font-medium text-gray-500">
             <span className="hover:text-[#69b549] transition-colors">📞 (61) 98114-0416 / (61) 99561-5570</span>
             <a href="https://instagram.com/veloxsolar" target="_blank" rel="noopener noreferrer" className="hover:text-[#E1306C] transition-colors flex items-center gap-1">
