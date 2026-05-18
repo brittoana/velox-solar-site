@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Configuração manual das cores da Velox */
+:root {
+  --velox-dark: #182236;
+  --velox-green: #4ADE80;
+  --velox-blue: #2563EB;
+  --velox-light: #F8FAFC;
+}
+
+body {
+  background-color: var(--velox-dark);
+  color: var(--velox-light);
+  font-family: Arial, Helvetica, sans-serif;
+}
