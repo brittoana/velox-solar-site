@@ -108,7 +108,7 @@ export default function Home() {
             { id: 'home', label: 'Home' },
             { id: 'quem-somos', label: 'Quem Somos' },
             { id: 'produtos', label: 'Produtos e Soluções' },
-            { id: 'parceiros', label: 'Parceiros Tier 1' },
+            { id: 'parceiros', label: 'Parceiros' },
             { id: 'faq', label: 'FAQ' }
           ].map((aba) => (
             <button
@@ -184,7 +184,7 @@ export default function Home() {
                           </select>
                         </div>
                         <div className="flex flex-col justify-end items-end pb-1.5">
-                          <span className="text-gray-400 text-xs">Fatura Mensal</span>
+                          <span className="text-gray-400 text-xs">Conta Mensal</span>
                           <span className="text-[#7fcc5e] font-black text-xl">R$ {formData.fatura}</span>
                         </div>
                       </div>
