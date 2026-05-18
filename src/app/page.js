@@ -322,7 +322,7 @@ export default function Home() {
                 },
                 { 
                   // 🚜 Foto limpa e funcional do Agronegócio
-                  img: "https://images.unsplash.com/photo-1594498653385-d5172b532c00?auto=format&fit=crop&w=600&q=80", 
+                  img: "https://images.pexels.com/photos/9799593/pexels-photo-9799593.jpeg?auto=compress&cs=tinysrgb&w=600", 
                   t: '🚜 Agronegócios', 
                   d: 'Autonomia completa no campo com painéis dimensionados para bombardeamento solar, irrigação contínua e suporte integral ao produtor rural.' 
                 },
